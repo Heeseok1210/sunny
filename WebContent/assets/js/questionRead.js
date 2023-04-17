@@ -1,26 +1,38 @@
-/**
- * 
- */
 
-// 목록
-function questionList(){
-    window.location.href="/gosu/searchOk.gu";
+let $listBtn = $('.list-btn');
+let $modifyBtn = $('.modify-btn');
+let $deleteBtn = $('.delete-btn');
+
+let questionNumber = $listBtn.data("questionnumber");
+
+$listBtn.on('click', () => {
+	window.location.href = '/story/storyListOk.st';
+});
+
+$modifyBtn.on('click', () => {
+	window.location.href = '/question/questionUpdate.qs?questionNumber=' + questionNumber;
+});
+
+$deleteBtn.on('click', () => {
+	window.location.href = '/question/questionDeleteOk.qs?questionNumber=' + questionNumber;
+});
+
+storyReplyAjax();
+
+function storyReplyAjax() {
+	$.ajax({
+		url: '/question/questionListOk.qs',
+		type: 'get',
+		data: { questionNumber: questionNumber },
+		dataType: "json",
+		success: showStoryReply
+	});
 }
 
-// 수정
-$(".modify-btn").on('click', () => {
-   window.location.href = '#' + questionNumber;
-});
+function showStoryReply(replies) {
+	let text = '';
 
-// 삭제
-$(".delete-btn").on('click', () => {
-   window.location.href = '#' + questionNumber;
-});
-
-function showReply(replies){
-   let text = '';
-   
-   replies.forEach(reply => {
+	replies.forEach(reply => {
       text += `
             <ul id="comment-list">
                   <li>
@@ -49,85 +61,69 @@ function showReply(replies){
             </ul>
       `;
    });
-   
-   $('.comment-list').html(text);
+	$('.comment-list').html(text);
 }
 
-//댓글 작성
-$('.submit-btn').on('click', function() {
-   $.ajax({
-      url : '/questionreply/questionreplyWriteOk.qr',
-      type : 'post',
-      data : {
-         questionNumber : questionNumber,
-         userNumber : userNumber,
-         replyContent : $('#content').val()
-      },
-      success : function(){
-         replyAjax();
-         $('#content').val('');
-      }
-   });
-});
-
-$('.comment-list').on('click', '.comment-delete', function(){
-   let replyNumber = $(this).data('number');
-   
-   $.ajax({
-      url : "/questionreply/questionreplyDeleteOk.qr",
-      type : "get",
-      data : {questionReplyNumber : questionReplyNumber},
-      success : function(){
-         replyAjax();
-      }
-   });
-});
-
-$('.comment-list').on('click','.comment-modify-ready', function(){
-	
-
-	let $parent = $(this).closest('#comment-list');
-
-	let $children = $parent.find('.comment-btn-group');
-
-	$children.eq(0).hide();
-	$children.eq(1).show();
-	
-	let $content = $(this).parent().prev().children();
-	console.log($content);
-	
-	$content.replaceWith(`<textarea class='modify-content'> ${$content.text()} </textarea>`);
-});
-
-$('.comment-list').on('click', '.comment-modify', function(){
-	let replyNumber = $(this).data('number');
-	
+//댓글작성
+$('.submit-btn').on('click',function(){
 	$.ajax({
-		url : '/questionreply/questionreplyUpdateOk.qr',
-		type : 'get',
+		url : '/questionReply/questionReplyWriteOk.qr',
+		type : 'post',
 		data : {
-			replyNumber : replyNumber,
-			replyContent : $('.modify-content').val()
+			questionNumber : questionNumber,
+			userNumber : userNumber,
+			gosuNumber : gosuNumber,
+			replyContent : $('#content').val()
 		},
 		success : function(){
-			replyAjax();
+			storyReplyAjax();
 		}
 	});
 });
 
 
+//댓글삭제
+$('.comment-list').on('click','.comment-delete' ,function(){
+	let replyNumber = $(this).data("number");
+	
+	$.ajax({
+		url : "/questionReply/questionReplyDeleteOk.qr",
+		type : "get",
+		data : {replyNumber : replyNumber},
+		success : function(){
+			storyReplyAjax();
+		}
+	});
+});
 
+$('.comment-list').on('click','.comment-modify-ready' ,function(){
+		let $parent = $(this).closest('#comment-list');
+		/*console.log($parent);*/
+		
+		let $children = $parent.find('.comment-btn-group');
+		/*console.log($children);*/
+		
+		$children.eq(0).hide();
+		$children.eq(1).show();
+		
+		let $content = $(this).parent().prev().children();
+		console.log($content);
+		
+		$content.replaceWith(`<textarea class='modify-content'>${$content.text()}</textarea>`);
+});
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+$('.comment-list').on('click','.comment-modify',function(){
+	let replyNumber = $(this).data('number');
+	
+	$.ajax({
+		url : "/questionReply/questionReplyUpdateOk.qr",
+		type : "get",
+		data : {
+			replyNumber : replyNumber,
+			replyContent : $('.modify-content').val()
+		},
+		success : function(){
+			storyReplyAjax();
+		}
+	});
+});

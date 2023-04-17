@@ -10,22 +10,15 @@ import com.sunny.app.Execute;
 import com.sunny.app.question.reply.dao.QuestionReplyDAO;
 import com.sunny.app.question.reply.dto.QuestionReplyDTO;
 
-public class QuestionReplyWriteOkController implements Execute {
+public class QuestionReplyUpdateOkController implements Execute {
 
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-		System.out.println("댓글입력했어요");
-		
 		QuestionReplyDTO questionReplyDTO = new QuestionReplyDTO();
-		req.setCharacterEncoding("UTF-8");
-		
-		questionReplyDTO.setGosuNumber(Integer.valueOf(req.getParameter("gosuNumber")));
-		questionReplyDTO.setQuestionNumber(Integer.valueOf(req.getParameter("questionNumber")));
+		questionReplyDTO.setReplyNumber(Integer.parseInt(req.getParameter("replyNumber")));
 		questionReplyDTO.setReplyContent(req.getParameter("replyContent"));
-		questionReplyDTO.setUserNumber(Integer.valueOf(req.getParameter("userNumber")));
 		
-		new QuestionReplyDAO().insert(questionReplyDTO);
+		new QuestionReplyDAO().update(questionReplyDTO);
 	}
 
 }
