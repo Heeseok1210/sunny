@@ -21,7 +21,7 @@
 <!-- 검색 -->
 		<div class="headsearch">
 			<form action="" class="expertsearch">
-				<input type="text" placeholder="분야를 입력해 식고수 찾기" class="searchtext" name="keyword" id="keyword" />
+				<input type="text" placeholder="식고수를 검색하세요!" class="searchtext" name="keyword" id="keyword" />
 				<button class="s-btn" id="s-btn">검색</button>
 			</form>
 		</div>

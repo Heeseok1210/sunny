@@ -29,6 +29,12 @@ public class QuestionReplyFrontController extends HttpServlet{
 			case "/questionreply/questionreplyWriteOk.qr":
 				new QuestionReplyWriteOkController().execute(req, resp);
 				break;
+			case "/questionReply/questionReplyDeleteOk.qr":
+				new QuestionReplyDeleteOkController().execute(req, resp);
+				break;
+			case "/questionReply/questionReplyUpdateOk.qr":
+				new QuestionReplyUpdateOkController().execute(req, resp);
+				break;
 		}
 	}
 }
