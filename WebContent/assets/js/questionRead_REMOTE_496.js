@@ -32,7 +32,6 @@ function storyReplyAjax() {
 function showStoryReply(replies) {
 	let text = '';
 
-	replies.forEach(reply => {
 	replies.forEach(questionReply => {
       text += `
             <ul id="comment-list">

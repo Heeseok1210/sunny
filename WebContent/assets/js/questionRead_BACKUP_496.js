@@ -32,8 +32,11 @@ function storyReplyAjax() {
 function showStoryReply(replies) {
 	let text = '';
 
+<<<<<<< HEAD
 	replies.forEach(reply => {
+=======
 	replies.forEach(questionReply => {
+>>>>>>> question/read
       text += `
             <ul id="comment-list">
                   <li>

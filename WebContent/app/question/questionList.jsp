@@ -68,6 +68,10 @@
 													href="${pageContext.request.contextPath}/question/questionReadOk.qs?questionNumber=${question.getQuestionNumber()}">
 													<td class="title">${question.getQuestionTitle()}</td>
 												</a>
+												<td class="imgz"></td>
+												<td class="title"><a
+													href="${pageContext.request.contextPath}/question/questionReadOk.qs?questionNumber=${question.getQuestionNumber()}">
+														${question.getQuestionTitle()} </a></td>
 											</tr>
 										</c:if>
 									</c:forEach>
