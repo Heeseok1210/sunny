@@ -14,7 +14,6 @@ import com.sunny.app.gosu.dao.GosuDAO;
 import com.sunny.app.gosu.vo.GosuVO;
 import com.sunny.app.question.dao.QuestionDAO;
 import com.sunny.app.question.dto.QuestionDTO;
-import com.sunny.app.question.vo.QuestionVO;
 
 public class QuestionListOkController implements Execute {
 
