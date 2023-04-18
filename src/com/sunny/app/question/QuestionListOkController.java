@@ -17,60 +17,60 @@ import com.sunny.app.question.dto.QuestionDTO;
 
 public class QuestionListOkController implements Execute {
 
-	@Override
-	public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
-		System.out.println("QuestionListOkController");
-		
-		int gosuNumber = Integer.parseInt(req.getParameter("gosuNumber"));
-		System.out.println("gosuNumber : " + gosuNumber);
+   @Override
+   public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+      
+      System.out.println("QuestionListOkController");
+      
+      int gosuNumber = Integer.parseInt(req.getParameter("gosuNumber"));
+      System.out.println("gosuNumber : " + gosuNumber);
 
-		  QuestionDAO questionDAO = new QuestionDAO();
-		  GosuDAO gosuDAO = new GosuDAO();
+        QuestionDAO questionDAO = new QuestionDAO();
+        GosuDAO gosuDAO = new GosuDAO();
 
-		  int total = questionDAO.getTotal();
-	      String temp = req.getParameter("page");
-	      
-	      int page = temp == null ? 1 : Integer.valueOf(temp);
-	      
-//	      한 페이지에 몇 개의 게시물? 10개
-	      int rowCount = 3;
-//	      페이지 버튼 세트는? 5개씩
-	      int pageCount = 3;
-	      
-	      int startRow = (page-1) * rowCount;
-	      
-	      int endPage = (int)(Math.ceil(page/(double)pageCount) * pageCount);
-	      
-	      int startPage = endPage - (pageCount-1);
-	      
-	      int realEndPage = (int)Math.ceil(total / (double)rowCount);
-	      
-	      endPage = endPage > realEndPage ? realEndPage : endPage;
-	      boolean prev = startPage > 1;
-	      boolean next = endPage != realEndPage;
+        int total = questionDAO.getTotal();
+         String temp = req.getParameter("page");
+         
+         int page = temp == null ? 1 : Integer.valueOf(temp);
+         
+//         한 페이지에 몇 개의 게시물? 10개
+         int rowCount = 3;
+//         페이지 버튼 세트는? 5개씩
+         int pageCount = 3;
+         
+         int startRow = (page-1) * rowCount;
+         
+         int endPage = (int)(Math.ceil(page/(double)pageCount) * pageCount);
+         
+         int startPage = endPage - (pageCount-1);
+         
+         int realEndPage = (int)Math.ceil(total / (double)rowCount);
+         
+         endPage = endPage > realEndPage ? realEndPage : endPage;
+         boolean prev = startPage > 1;
+         boolean next = endPage != realEndPage;
 
-	      Map<String, Integer> pageMap = new HashMap<>();
-	      pageMap.put("startRow", startRow);
-	      pageMap.put("rowCount", rowCount);
-	      pageMap.put("gosuNumber", Integer.parseInt(req.getParameter("gosuNumber")));
-	      
-	      List<QuestionDTO> questions = questionDAO.selectAll(pageMap);
-	      System.out.println("questions = " + questions);
-//	      String gosuNumber2 = questions.get(0).get("gosuNumber").toString();
-	      List<GosuVO> gosus = gosuDAO.selectAll(pageMap);
-	      System.out.println("gosus = " + gosus);
-	      req.setAttribute("gosuNickName", questionDAO.getNickName(gosuNumber));
-	      
-	      req.setAttribute("gosus", gosus);
-	  	  req.setAttribute("questionList", questions);
-	      req.setAttribute("page", page);
-	      req.setAttribute("startPage", startPage);
-	      req.setAttribute("endPage", endPage);
-	      req.setAttribute("prev", prev);
-	      req.setAttribute("next", next);
-	      
-	      req.getRequestDispatcher("/app/question/questionList.jsp").forward(req, resp);
-	   }
+         Map<String, Integer> pageMap = new HashMap<>();
+         pageMap.put("startRow", startRow);
+         pageMap.put("rowCount", rowCount);
+         pageMap.put("gosuNumber", Integer.parseInt(req.getParameter("gosuNumber")));
+         
+         List<QuestionDTO> questions = questionDAO.selectAll(pageMap);
+         System.out.println("questions = " + questions);
+//         String gosuNumber2 = questions.get(0).get("gosuNumber").toString();
+         List<GosuVO> gosus = gosuDAO.selectAll(pageMap);
+         System.out.println("gosus = " + gosus);
+         req.setAttribute("gosuNickName", questionDAO.getNickName(gosuNumber));
+         
+         req.setAttribute("gosus", gosus);
+          req.setAttribute("questionList", questions);
+         req.setAttribute("page", page);
+         req.setAttribute("startPage", startPage);
+         req.setAttribute("endPage", endPage);
+         req.setAttribute("prev", prev);
+         req.setAttribute("next", next);
+         
+         req.getRequestDispatcher("/app/question/questionList.jsp").forward(req, resp);
+      }
 
-	}
+   }

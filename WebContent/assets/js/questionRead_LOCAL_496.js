@@ -33,26 +33,25 @@ function showStoryReply(replies) {
 	let text = '';
 
 	replies.forEach(reply => {
-	replies.forEach(questionReply => {
       text += `
             <ul id="comment-list">
                   <li>
                      <div class="comment-info">
-                        <span class="writer">${questionReply.userNickName}</span> <span
-                           class="date">${questionReply.replyDate}</span>
+                        <span class="writer">${reply.memberId}</span> <span
+                           class="date">${reply.replyDate}</span>
                      </div>
                      <div class="comment-content-wrap">
                         <div class="comment-content">
                            <p>${reply.replyContent}</p>
                         </div>`
                         
-         if(userNumber == questionReply.userNumber){               
+         if(userNumber == reply.userNumber){               
          text +=    `<div class="comment-btn-group">
                            <button type=button class="comment-modify-ready">수정</button>
-                           <button type=button class="comment-delete" data-number="${questionReply.replyNumber}">삭제</button>
+                           <button type=button class="comment-delete" data-number="${reply.replyNumber}">삭제</button>
                         </div>
                         <div class="comment-btn-group none">
-                           <button type=button class="comment-modify" data-number="${questionReply.replyNumber}">수정 완료</button>
+                           <button type=button class="comment-modify" data-number="${reply.replyNumber}">수정 완료</button>
                         </div>`
                         
          }         

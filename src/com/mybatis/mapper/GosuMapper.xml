@@ -16,7 +16,6 @@
 		group by g.gosu_number
 		)as g on tg.gosu_number = g.gosu_number
 		where grade_number = "500" order by user_date ASC
-		limit #{startRow}, #{rowCount}
 	</select>
 	
 <!-- 페이징처리 -->
