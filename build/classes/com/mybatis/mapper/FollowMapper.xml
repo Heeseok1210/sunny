@@ -2,5 +2,62 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="follow">
+	<!--나를 팔로우하는 사람-->
+	<select id="selectFollower" parameterType="map" resultType="FollowVO">
+	select tu.user_number, tf.user_from, tu.user_nickname , tuf.file_system_name, tuf.file_original_name,
+    	case when exists (
+        select 1 
+        from tbl_follow 
+        where user_from = #{myNumber}
+        and user_to = tf.user_from
+    	) then 1
+    	else 0 end as following_status
+	from tbl_follow tf  
+    join tbl_user tu on tu.user_number = tf.user_from
+    left join tbl_user_file tuf on tuf.user_number = tf.user_from 
+	where tf.user_to = #{userNumber}
+	</select>
 
+	<select id="selectFollowerCnt" parameterType="_int" resultType="_int">
+	select count(follow_number)  from tbl_follow tf where user_to=#{userNumber}
+	</select>
+	
+	<!--내가 팔로우하는 사람-->
+	<select id="selectFollowing" parameterType="map" resultType="FollowVO">
+	select tu.user_number, tf.user_to, tu.user_nickname , tuf.file_system_name, tuf.file_original_name,
+    	case when exists (
+        select 1 
+        from tbl_follow 
+        where user_from = #{myNumber}
+        and user_to = tf.user_to
+   		 ) then 1
+   		 else 0 end as following_status
+	from tbl_follow tf  
+    join tbl_user tu on tu.user_number = tf.user_to
+    left join tbl_user_file tuf on tuf.user_number = tf.user_to
+	where tf.user_from = #{userNumber}
+	</select>
+
+	<select id="selectFollowingCnt" parameterType="_int" resultType="_int">
+	select count(follow_number)  from tbl_follow tf where user_from=#{userNumber}
+	</select>
+	
+	<!-- 팔로우하기 -->
+	<insert id="insert" parameterType="FollowDTO">
+	insert into tbl_follow (user_from, user_to)
+	values(#{userFrom}, #{userTo})
+	</insert>
+	
+	<!-- 팔로우취소하기 -->
+	<delete id="delete" parameterType="FollowDTO">
+	delete from tbl_follow
+	where user_from=#{userFrom} and user_to=#{userTo}
+	</delete>
+	
+	<!-- 내가 팔로우 하고 있는지 확인 -->
+	<select id="checkFollow" parameterType="FollowDTO" resultType="_int">
+		select count(follow_number) from tbl_follow tf where user_from = #{userFrom} and user_to=#{userTo}
+	</select>
+	
+	
 </mapper>

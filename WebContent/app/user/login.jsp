@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>로그인 | 볕 들 무렵</title>
-  <link rel="stylesheet" href="/assets/css/login.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/login.css">
   <style>
     @font-face {
       font-family: SpoqaHanSans-Regular;
@@ -66,7 +66,7 @@
         <div class="input">
           <input type="text" id="id" name="userId" placeholder="아이디" minlength="3" maxlength="10" required/>
           <br>
-          <input type="password" id="pw" name="userPassword" placeholder="비밀번호" minlength="3" maxlength="15" required>
+          <input type="password" id="pw" name="userPassword" placeholder="비밀번호" minlength="4" maxlength="15" required>
         </div>
         <button type="submit" value="로그인" class="login1">로그인</button>
         <div class="menu2">
@@ -88,7 +88,7 @@
     </div>
   </div>
     <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
-  	<script src="${pageContext.request.contextPath}/assets/js/login.js"></script>
+     <script src="${pageContext.request.contextPath}/assets/js/login.js"></script>
 </body>
 
 </html>

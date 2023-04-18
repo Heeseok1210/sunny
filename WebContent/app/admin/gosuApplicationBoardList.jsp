@@ -41,7 +41,7 @@
 				<div class="manage-manu">
 					<div class="user-manage">
 						<div class="user-manage-headline">
-							<img src="../../assets/img/admin/img/user.png" alt="" />
+							<img src="../../assets/img/admin/user.png" alt="" />
 							<h2>관리하기</h2>
 						</div>
 						<div class="hr">
@@ -101,16 +101,6 @@
 									</tr>
 								</c:otherwise>
 							</c:choose>
-							<!-- 
-								<div>
-									<div class="num">1</div>
-									<div class="title">
-										<a href="#">글 제목5</a>
-									</div>
-									<div class="writer">치킨</div>
-									<div class="date">1993.2.12</div>
-								</div>
-								 -->
 						</div>
 					</div>
 				</div>

@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
+
 <mapper namespace="questionFile">
 
+	<insert id="insert" parameterType="QuestionFileDTO">
+		insert into tbl_question_file(file_system_name, file_original_name, question_number, gosu_number)
+		values(#{fileSystemName}, #{fileOriginalName}, #{questionNumber}, #{gosuNumber})
+	</insert>
+	
+	<select id="select" parameterType="_int" resultType="QuestionVO">
+		select file_system_name, file_original_name, user_number
+		from tbl_question_file
+		where user_number = #{userNumber}
+	</select>
+	
 </mapper>

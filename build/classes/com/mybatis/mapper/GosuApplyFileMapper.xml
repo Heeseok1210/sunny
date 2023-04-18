@@ -2,5 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="gosuApplyFile">
-
+	<insert id="insert" parameterType="gosuApplyFileDTO">
+			insert into tbl_gosu_apply_file(file_system_name, file_original_name, apply_number)
+			values(#{fileSystemName}, #{fileOriginalName}, #{applyNumber});
+	</insert>
 </mapper>

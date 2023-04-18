@@ -2,5 +2,31 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="storyReply">
+	<select id="selectAll" parameterType="_int"
+		resultType="StoryReplyVO">
+		select reply_number, reply_content, reply_date,
+		story_number, sr.user_number, user_nickname
+		from tbl_user u join
+		tbl_story_reply sr
+		on story_number = #{storyNumber} and u.user_number =
+		sr.user_number
+	</select>
+
+	<insert id="insert" parameterType="storyReplyDTO">
+		insert into
+		tbl_story_reply(reply_content,story_number,user_number,reply_date)
+		values(#{replyContent},#{storyNumber},#{userNumber},now())
+	</insert>
+
+	<delete id="delete" parameterType="_int">
+		delete from tbl_story_reply
+		where reply_number = #{replyNumber}
+	</delete>
+
+	<update id="update" parameterType="storyReplyDTO">
+		update tbl_story_reply
+		set reply_content =#{replyContent}
+		where reply_number = #{replyNumber}
+	</update>
 
 </mapper>

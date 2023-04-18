@@ -3,4 +3,106 @@
 
 <mapper namespace="user">
 
+	<select id="getUserId1" parameterType="_int" resultType="string">
+		select user_id from tbl_user where user_number = #{userNumber}
+	</select>
+
+	<insert id="join" parameterType="UserDTO">
+		insert into tbl_user(user_id,
+		user_password, user_name, user_nickname,
+		user_phone, user_email,
+		user_date)
+		values(#{userId}, #{userPassword}, #{userName},
+		#{userNickname}, #{userPhone},
+		#{userEmail}, now())
+	</insert>
+
+	<select id="login" parameterType="UserDTO" resultType="_int">
+		select
+		user_number from tbl_user
+		where user_id = #{userId} and user_password =
+		#{userPassword}
+	</select>
+
+	<select id="checkId" parameterType="string" resultType="_int">
+		select
+		count(user_number) from tbl_user
+		where user_id = #{userId}
+	</select>
+
+	<select id="getUserId" parameterType="_int" resultType="string">
+		select
+		user_id from tbl_user
+		where user_number = #{userNumber}
+	</select>
+
+	<update id="userComment" parameterType="UserDTO">
+		update tbl_user set user_comment = #{userComment}
+		where user_number = #{userNumber}
+	</update>
+
+	<select id="getUserInfo" parameterType="_int" resultType="UserVO">
+		select tu.user_number, user_id, user_password, user_name, user_nickname, 
+		user_phone, user_email, user_comment, grade_number, find_question_number, find_password_answer
+		from tbl_find_password tfp join tbl_user tu 
+		on tfp.user_number= #{userNumber} and tu.user_number = tfp.user_number ;
+	</select>
+	
+	<update id="userModify" parameterType="UserVO">
+		update tbl_user tu inner join tbl_find_password tfp
+		on tu.user_number = tfp.user_number 
+		update tbl_user set
+		user_comment = #{userComment}
+		where user_number = #{userNumber}
+	</update>
+
+	<select id="getUserInfo" parameterType="_int"
+		resultType="UserVO">
+		select tu.user_number, user_id, user_password, user_name,
+		user_nickname,
+		user_phone, user_email, user_comment, grade_number,
+		find_question_number, find_password_answer
+		from tbl_find_password tfp
+		join tbl_user tu
+		on tfp.user_number=#{userNumber} 
+		and tu.user_number = tfp.user_number ;
+	</select>
+
+	<update id="userModify" parameterType="UserVO">
+		update tbl_user tu inner join tbl_find_password tfp
+		on tu.user_number = tfp.user_number
+		set user_password = #{userPassword}, user_nickname =#{userNickname},
+		user_phone =#{userPhone}, user_email = #{userEmail},
+		tfp.find_question_number=#{findQuestionNumber}, tfp.find_password_answer = #{findPasswordAnswer}
+		where tu.user_number =#{userNumber}
+	</update>
+	
+	<select id="myStoryList" parameterType="_int" resultType="StoryFileVO">
+	select story_number, story_title, user_number, file_system_name
+	from tbl_story where user_number =#{userNumber}
+	order by last_update desc
+	</select>
+	
+	<select id="myStoryCnt" parameterType="_int" resultType="_int">
+	select count(story_number) from tbl_story where user_number =#{userNumber}
+	</select>
+	
+
+	<delete id="userDrop" parameterType="_int">
+		delete from tbl_user where
+		user_number=#{userNumber}
+	</delete>
+
+<!-- 회원정보수정시 현재 비밀번호 확인 -->
+	<select id="checkPw" parameterType="UserDTO" resultType="_int">
+		select count(user_number)  from tbl_user tu 
+		where user_number = #{userNumber} and user_password =#{userPassword}
+	</select>
+<!-- 닉네임 중복확인 -->
+	<select id="checkNick" parameterType="String" resultType="_int">
+		select count(user_number) from tbl_user tu 
+		where user_nickname = #{userNickname}
+	</select>
+	
+	
 </mapper>

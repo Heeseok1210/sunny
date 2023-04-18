@@ -1,8 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-
 <mapper namespace="gosu">
 
+<!-- 식고수 뽑기  -->
+	<select id="selectAll" resultType="GosuVO" parameterType="map">
+		select tu.user_number , tu.user_nickname, tu.user_comment , tu.user_date, g.gosu_fields, g.gosu_number
+		from tbl_user tu join tbl_gosu tg
+		on tu.user_number = tg.user_number 
+		join(
+		select g.gosu_number, group_concat(f.field_name separator ', ')as gosu_fields  from tbl_field f
+		join tbl_gosu_field gf on f.field_number = gf.field_number
+		join tbl_gosu g on gf.gosu_number = g.gosu_number
+		join tbl_user u on g.user_number = u.user_number
+		group by g.gosu_number
+		)as g on tg.gosu_number = g.gosu_number
+		where grade_number = "500" order by user_date ASC
+		limit #{startRow}, #{rowCount}
+	</select>
+	
+<!-- 페이징처리 -->
+	<select id="getTotal" resultType="_int">
+		select count(user_number) from tbl_user
+	</select>
+	
+	<!-- userNumber로 식고수번호 뽑아오기 -->
+	<select id="getGosuNumber" parameterType="_int" resultType="_int">
+		select gosu_number from tbl_gosu tg where user_number =#{userNumber}
+	</select>
+
+	<!-- 고수 질문많은순으로 1명 받아오기 -->
+	<select id="selectGosuMain" resultType="GosuVO">
+		select tu.user_number , tu.user_nickname , tuf.file_system_name , tg.gosu_number , g.gosu_fields
+		from tbl_user tu join tbl_gosu tg
+		on tu.user_number = tg.user_number 
+		join(
+		select g.gosu_number, group_concat(f.field_name separator ', ')as gosu_fields  from tbl_field f
+		join tbl_gosu_field gf on f.field_number = gf.field_number
+		join tbl_gosu g on gf.gosu_number = g.gosu_number
+		join tbl_user u on g.user_number = u.user_number
+		group by g.gosu_number
+		)as g on tg.gosu_number = g.gosu_number
+		left join tbl_user_file tuf on tu.user_number =tuf.user_number 
+		left join tbl_question tq on tq.gosu_number =g.gosu_number
+		group by tu.user_number, tuf.file_system_name , tg.gosu_number , g.gosu_fields, tu.user_nickname 
+		order by count(tq.question_number) desc
+		limit 1
+	</select>
+
+	<insert id="insert" parameterType="GosuDTO">
+		insert into tbl_gosu(gosu_plan, user_number)
+		values(#{gosuPlan}, #{userNumber});
+	</insert>
+	
+	<select id="getSequence" resultType="_int">
+		select last_insert_id()
+	</select>
 
 </mapper>

@@ -12,38 +12,26 @@
       integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="../../assets/css/algorithm/testFour.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/testFour.css" />
 </head>
 <body>
 	<section id="qna" class="mx-auto my-5 py-5 px-3">
       <progress value="160" max="200" id="my_skill"></progress>
-      <a href="http://127.0.0.1:5500/html/FindMyPlant/main/index.html">
+      <a href="http://localhost:8085/algorithm/index.ag">
       <img src="../../assets/img/algorithm/index/home.png" 
         class = "img"></a>
       <div class="questionContainer">
         <a href="http://127.0.0.1:5500/html/FindMyPlant/test3/test3.html">
-        <input
-          class ="back"
-          type="image"
-          src="../../assets/img/algorithm/testTwo/back.png"
-          value="뒤로가기"
-        />
         </a>
         <h1>4. 실내공간에 충분한 크기의 화분이 있는 공간이 있나요?</h1>
       </div>
       <div class="answerContainer">
-        <a href="http://127.0.0.1:5500/html/FindMyPlant/test5/test5.html">
-        <ul>
-          <li style="list-style-type: none">
-            <button class="btn true">YES</button>
-          </li>
-          <li style="list-style-type: none">
-            <button class="btn no">NO</button>
-            </li>
-         </ul>
-       </a>
+        	<form action="${pageContext.request.contextPath}/algorithm/testFive.ag" method="get">
+		<input type="hidden" name="selectFour" value="0">
+		<input type="button" class="btn true"  value="네" onclick="document.getElementsByName('selectFour')[0].value='1';this.form.submit();">
+		<input type="button"  class="btn no" value="아니오" onclick="document.getElementsByName('selectFour')[0].value='0';this.form.submit();">
+	</form>
       </div>
     </section>
-    <script src ="../../assets/js/algorithm/test1.js"></script>
 </body>
 </html>

@@ -10,6 +10,7 @@
 	
 	<typeAliases>
 		<typeAlias type="com.sunny.app.user.dto.UserDTO" alias ="UserDTO"/>
+		<typeAlias type="com.sunny.app.user.vo.UserVO" alias ="UserVO"/>
 		<typeAlias type="com.sunny.app.grade.dto.GradeDTO" alias ="GradeDTO"/>
 		<typeAlias type="com.sunny.app.user.file.dto.UserFileDTO" alias ="UserFileDTO"/>
 		<typeAlias type="com.sunny.app.follow.dto.FollowDTO" alias ="FollowDTO"/>
@@ -22,16 +23,33 @@
 		<typeAlias type="com.sunny.app.gosu.field.dto.GosuFieldDTO" alias ="GosuFieldDTO"/>
 		<typeAlias type="com.sunny.app.story.dto.StoryDTO" alias ="StoryDTO"/>
 		<typeAlias type="com.sunny.app.story.vo.StoryVO" alias ="StoryVO"/>
+		<typeAlias type="com.sunny.app.story.vo.StoryListVO" alias ="StoryListVO"/>
 		<typeAlias type="com.sunny.app.story.file.dto.StoryFileDTO" alias ="StoryFileDTO"/>
 		<typeAlias type="com.sunny.app.story.reply.dto.StoryReplyDTO" alias ="StoryReplyDTO"/>
+		<typeAlias type="com.sunny.app.story.reply.vo.StoryReplyVO" alias ="StoryReplyVO"/>
 		<typeAlias type="com.sunny.app.question.dto.QuestionDTO" alias ="QuestionDTO"/>
 		<typeAlias type="com.sunny.app.question.file.dto.QuestionFileDTO" alias ="QuestionFileDTO"/>
 		<typeAlias type="com.sunny.app.question.reply.dto.QuestionReplyDTO" alias ="QuestionReplyDTO"/>
+		<typeAlias type="com.sunny.app.question.reply.vo.QuestionReplyVO" alias ="QuestionReplyVO"/>
 		<typeAlias type="com.sunny.app.algorithm.dto.AlgorithmDTO" alias ="AlgorithmDTO"/>
 		<typeAlias type="com.sunny.app.plant.dto.PlantDTO" alias ="PlantDTO"/>
 		<typeAlias type="com.sunny.app.plant.file.dto.PlantFileDTO" alias ="PlantFileDTO"/>
 		<typeAlias type="com.sunny.app.admin.dto.AdminDTO" alias ="AdminDTO"/>
-
+		<typeAlias type="com.sunny.app.user.vo.UserVO" alias="UserVO"/>
+		<typeAlias type="com.sunny.app.admin.dto.UserManageDTO" alias ="UserManageDTO"/>
+		<typeAlias type="com.sunny.app.admin.vo.UserManageVO" alias ="UserManageVO"/>
+		<typeAlias type="com.sunny.app.admin.vo.UserDetailVO" alias ="UserDetailVO"/>
+		<typeAlias type="com.sunny.app.admin.vo.GosuManageVO" alias ="GosuManageVO"/>
+		<typeAlias type="com.sunny.app.admin.vo.GosuDetailVO" alias ="GosuDetailVO"/>
+		<typeAlias type="com.sunny.app.user.file.vo.UserFileVO" alias="UserFileVO"/>
+		<typeAlias type="com.sunny.app.follow.vo.FollowVO" alias="FollowVO"/>
+		<typeAlias type="com.sunny.app.my.page.dto.MyPageDTO" alias="MyPageDTO"/>
+		<typeAlias type="com.sunny.app.story.file.vo.StoryFileVO" alias ="StoryFileVO"/>
+		<typeAlias type="com.sunny.app.admin.vo.GosuApplicationVO" alias ="GosuApplicationVO"/>
+		<typeAlias type="com.sunny.app.admin.vo.GosuApplicationReadVO" alias ="GosuApplicationReadVO"/>
+		<typeAlias type="com.sunny.app.admin.vo.HeaderInfoVO" alias ="HeaderInfoVO"/>
+		<typeAlias type="com.sunny.app.gosu.vo.GosuVO" alias ="GosuVO"/>
+		<typeAlias type="com.sunny.app.question.vo.QuestionVO" alias ="QuestionVO"/>
 
 
 	</typeAliases>

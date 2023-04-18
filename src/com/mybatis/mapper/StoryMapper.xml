@@ -25,14 +25,19 @@
 
 	<insert id="insert" parameterType="StoryDTO">
 		insert into tbl_story
+		(story_title, story_content,story_date,last_update ,
+		story_viewcnt,file_system_name,
+		user_number)
+		values (#{storyTitle},#{storyContent},now(),now(),0
+		,#{fileSystemName},#{userNumber})
+	</insert>
+
+	<update id="cover" parameterType="StoryDTO">
+		update tbl_story set file_system_name =#{fileSystemName} where story_number =#{storyNumber}
 		(story_title, story_content, story_content2, story_content3, story_date, last_update ,
 		story_viewcnt,file_system_name,file_original_name,
 		user_number)
 		values (#{storyTitle},#{storyContent},#{storyContent2},#{storyContent3},now(),now(),0,#{fileSystemName},#{fileOriginalName},#{userNumber})
-	</insert>
-
-	<update id="cover" parameterType="StoryDTO">
-		update tbl_story set file_system_name = #{fileSystemName} where story_number = #{storyNumber}
 	</update>
 
 	<select id="getSequence" resultType="_int">

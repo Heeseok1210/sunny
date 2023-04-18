@@ -2,6 +2,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap");
 
 
+/* ------------------------------------------------------------Hedaer-----------------------------------------------------------------------*/
+
+
 * {
   margin: 0;
   padding: 0;
@@ -52,6 +55,104 @@ ul {
 li {
   list-style: none;
 }
+
+/* 헤더1 로그인,회원가입 / 로고 */
+.header1 {
+  display: flex;
+  flex-direction: column;
+}
+/* 로그인, 회원가입 */
+.header1--top {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  background-color: #f2f2f2;
+  line-height: 30px;
+}
+.header1--top a {
+  color: #808080;
+  font-size: 14px;
+  margin-right: 18px;
+}
+/* 로고 */
+.header1--bottom {
+  height: 87px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header1--bottom a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header1--bottom h1 {
+  color: #009a3e;
+  font-weight: 700;
+  font-family: "Dongle", sans-serif;
+  font-size: 35px;
+}
+.logo {
+  width: 35px;
+  height: 35px;
+}
+.logo svg {
+  height: 35px;
+  fill: #009a3e;
+}
+
+/* 헤더2 메뉴바, 버튼2개 */
+.header2 {
+  height: 28px;
+  padding: 9px 0;
+  border-bottom: 1px solid #d9d9d9;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* 헤더2 메뉴바 */
+.menu-list-ul {
+  display: flex;
+}
+
+.menu-list {
+  height: 28px;
+  line-height: 28px;
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0 18px;
+  list-style-type: none;
+  flex: none;
+}
+
+/* 헤더2 오른쪽 버튼2개 */
+.btn-list-ul {
+  display: flex;
+}
+
+.btn-list a {
+  height: 28px;
+  margin-right: 18px;
+  line-height: 28px;
+  font-size: 14px;
+  flex: none;
+}
+
+.btn-list a > img {
+  height: 15px;
+  width: 15px;
+}
+
+
+
+
+
+/* ------------------------------------------------------------Main-------------------------------------------------------------------------- */
+
 
 .container {
   margin: 0 auto;
@@ -367,11 +468,8 @@ section > .question{
   border-radius: 50%;
 }
 .inner-area img{
-
   background-image: url('../../assets/img/main/전문가 아이콘.png');
-
   background-image: url('../../assets/img/전문가 아이콘.png');
-
   height: 100%;
   width: 100%;
   border-radius: 50%;
@@ -643,5 +741,91 @@ label.right {
 
 .img4{
   width:285px; height:370px;
-
 }
+
+/* --------------------------------------------------------------------Footer------------------------------------------------------------- */
+
+
+
+footer a:visited {
+  text-decoration: none;
+  color: #bbb;
+}
+
+footer a:link {
+  text-decoration: none;
+  color: #bbb;
+}
+
+footer a:hover {
+  color: #0076c0;
+  text-decoration-line: underline;
+}
+
+.footer-all {
+  width: 2000px;
+  margin: auto;
+  display: flex;
+}
+.footer-container1 {
+  width: 1800px;
+  height: 500px;
+}
+
+.parrot-and-teamname {
+  display: flex;
+}
+
+.team-name {
+  display: flex;
+  align-items: center;
+}
+
+.team-name {
+  font-size: 30px;
+}
+
+.footer-service {
+  margin: 10px 0px 30px 0px;
+}
+
+.team-explain {
+  margin-bottom: 30px;
+}
+
+.team-explanation-li {
+  list-style: none;
+}
+
+.team-logo {
+  height: 300px;
+  width: 300px;
+}
+
+.footer-container2 {
+  width: 40%;
+  margin-right: 300px;
+}
+.team-logo-box {
+  display: flex;
+  justify-content: right;
+}
+
+.icon-link {
+  margin-top: 10px;
+  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.icon-ul {
+  list-style: none;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.icon-ul li {
+  float: left;
+  margin-left: 20px;
+}
+

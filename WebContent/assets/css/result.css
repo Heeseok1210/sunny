@@ -23,9 +23,9 @@ body {
 
 .result-name {
   font-family: 'Single Day', cursive;
-  font-size: 25px;
+  font-size: 35px;
   margin-top: 15px;
-  font-size:30px;
+  font-size:35px;
 }
 
 div {
@@ -81,6 +81,7 @@ li::marker {
 .result-tip > h6{
 
   margin-bottom : 55px;
+  font-size : 30px;
 }
 
 .btn1{
@@ -93,4 +94,11 @@ li::marker {
   margin: 3px 10px;
   position: relative;
   bottom:40px;
+}
+
+.btn1:hover{
+	
+  background: rgba(41, 175, 101, 0.5);
+  color: white;
+  transition: 0.3s;
 }

@@ -247,4 +247,6 @@
     <url-pattern>*.ma</url-pattern>
   </servlet-mapping>
   
+  
+  	
 </web-app>

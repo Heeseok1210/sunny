@@ -1,0 +1,86 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Gugi&family=Single+Day&display=swap');
+
+
+
+ body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(206, 247, 206);
+} 
+
+
+.loading{
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+width: 500px;
+height: 220px;
+}
+
+
+.loading-title {
+font-size: 30px;
+font-weight: 400;
+line-height: 1.3333333333;
+color: #151B26;
+text-align: center;
+animation-name: flicker;
+animation-duration: 1600ms;
+animation-iteration-count: infinite;
+animation-direction: alternate;
+margin-bottom: 20px;
+}
+
+.progress-bar{
+width: 300px;
+height: 12px;
+background-color: #e5eaef;
+border-radius: 100px;
+position: relative;
+overflow: hidden;
+}
+
+.progress-bar-gauge{
+position: absolute;
+top: 0;
+left: 0;
+width: 20px;
+height: 12px;
+border-radius: 100px;
+background-color: #13CE66;
+animation-name: loading-bar;
+animation-duration: 1600ms;
+animation-iteration-count: infinite;
+animation-timing-function: ease-out;
+}
+
+@keyframes flicker{
+  from{
+    opacity: 1;
+  }
+  to{
+    opacity: 0;
+  }
+}
+
+@keyframes loading-bar{
+0% {
+  width: 0;
+  opacity: 0;
+}
+90%{
+  width: 100%;
+  opacity: 1;
+}
+100%{
+  width: 100%;
+  opacity: 0;
+}
+}

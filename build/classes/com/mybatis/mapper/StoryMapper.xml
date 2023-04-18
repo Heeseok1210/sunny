@@ -2,10 +2,83 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="story">
- <select id="selectAll" resultType="StoryVO">
- 	select story_number, story_title, story_content, story_viewcnt, story_date, 
-	last_update, u.user_number, u.user_nickname 
-	from tbl_user u join tbl_story s 
-	on u.user_number  = s.user_number
- </select>
+	<select id="selectAll" resultType="StoryListVO"
+		parameterType="map">
+		select s.story_number, s.story_title, u.user_nickname,
+		uf.file_system_name
+		AS user_profile_image, s.file_system_name, s.file_original_name
+		from tbl_story s
+		join tbl_user u ON s.user_number =
+		u.user_number
+		left outer join tbl_user_file uf ON u.user_number =
+		uf.user_number
+		order by story_number desc
+		limit #{startRow},
+		#{rowCount}
+	</select>
+
+	<select id="getTotal" resultType="_int">
+		select count(story_number) from
+		tbl_story
+	</select>
+
+
+	<insert id="insert" parameterType="StoryDTO">
+		insert into tbl_story
+		(story_title, story_content,story_date,last_update ,
+		story_viewcnt,file_system_name,
+		user_number)
+		values (#{storyTitle},#{storyContent},now(),now(),0
+		,#{fileSystemName},#{userNumber})
+	</insert>
+
+	<update id="cover" parameterType="StoryDTO">
+		update tbl_story set file_system_name =#{fileSystemName} where story_number =#{storyNumber}
+		(story_title, story_content, story_content2, story_content3, story_date, last_update ,
+		story_viewcnt,file_system_name,file_original_name,
+		user_number)
+		values (#{storyTitle},#{storyContent},#{storyContent2},#{storyContent3},now(),now(),0,#{fileSystemName},#{fileOriginalName},#{userNumber})
+	</update>
+
+	<select id="getSequence" resultType="_int">
+		select last_insert_id()
+	</select>
+
+	<select id="select" parameterType="_int" resultType="StoryListVO">
+		select s.story_number, s.story_title, s.story_content, s.story_content2, s.story_content3,s.story_viewcnt,
+		s.story_date, last_update,u.user_number,
+		u.user_nickname, uf.file_system_name as user_profile_image
+		from tbl_story s
+		inner join tbl_user u ON s.user_number = u.user_number
+		left outer join tbl_user_file uf ON u.user_number = uf.user_number
+		where s.story_number = #{storyNumber};
+	</select>
+
+	<update id="updateReadCount" parameterType="_int">
+		update tbl_story
+		set
+		story_viewcnt = story_viewcnt + 1
+		where story_number = #{storyNumber}
+	</update>
+	
+	
+	<select id="selectMainList" resultType="StoryListVO" >
+		select ts.story_number, ts.story_title, ts.file_system_name,ts.user_number, tu.user_nickname, tuf.file_system_name as user_profile_Image
+		from tbl_story ts 
+		left join tbl_user_file tuf on ts.user_number = tuf.user_number 
+		left join tbl_user tu on ts.user_number = tu.user_number 
+		order by last_update desc
+		limit 0,6
+	</select>
+	
+	<delete id="delete" parameterType="_int">
+		delete from tbl_story where story_number = #{storyNumber}
+	</delete>
+	
+	<update id="update" parameterType="StoryDTO">
+		update tbl_story
+		set story_title = #{storyTitle}, story_content = #{storyContent}, story_content2 = #{storyContent2}, story_content3 = #{storyContent3},file_system_name=#{fileSystemName}, file_original_name=#{fileOriginalName}
+		where story_number = #{storyNumber}
+	</update>
+	
 </mapper>

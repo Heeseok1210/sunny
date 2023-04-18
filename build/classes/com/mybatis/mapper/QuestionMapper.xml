@@ -3,5 +3,64 @@
 
 <mapper namespace="question">
 
-
+<!-- 리스트 뽑을거 -->
+	<select id="selectAll" resultType="QuestionDTO" parameterType="map">
+		SELECT tg.gosu_number,question_number, tu.user_number, question_title, question_content, question_date, question_viewcnt, question_status, last_update
+		FROM tbl_question tq 
+		join tbl_user tu 
+		join tbl_gosu tg
+		on tq.user_number = tu.user_number 
+		where tg.gosu_number = tq.gosu_number and tg.gosu_number=#{gosuNumber}
+		order by question_date asc 
+	</select>
+	
+<!-- 페이징처리-->
+	<select id="getTotal" resultType="_int">
+		select count(question_number) from tbl_question
+	</select>
+	
+<!-- 질문쓰기 -->
+	<insert id="insert" parameterType="QuestionDTO" >
+		insert into tbl_question(question_title, question_content, gosu_number, user_number)
+		values(#{questionTitle},#{questionContent}, #{gosuNumber}, #{userNumber})
+	</insert>
+	
+	<select id="getSequence" resultType="_int">
+		select last_insert_id()
+	</select>
+		
+<!-- 고수 닉네임 뽑기 -->
+	<select id="getNickName" resultType="string" parameterType="_int">
+		SELECT user_nickname 
+		FROM tbl_user tu join tbl_gosu tg 
+		ON tu.user_number = tg.user_number 
+		WHERE tg.gosu_number = #{gosuNumber}
+	</select>
+	
+<!-- 질문읽기 -->
+	<select id="select" parameterType="_int" resultType="QuestionVO">
+		select question_number, question_title, question_content, question_date, tu.user_nickname, tq.question_viewcnt 
+		from tbl_user tu join tbl_question tq 
+		on question_number=#{questionNumber} and tu.user_number = tq.user_number
+	</select>
+	
+<!-- 조회수 -->
+	<update id="updateReadCount" parameterType="_int">
+		update tbl_question
+		set question_viewcnt = question_viewcnt + 1
+		where question_number=#{questionNumber}
+	</update>
+	
+	<!-- 마이페이지에서 나에게 온 질문리스트뽑기 -->
+	<select id="getMypageList" parameterType="map" resultType="QuestionVO">
+		select tq.question_number, tq.question_title, tqf.file_system_name
+		from tbl_gosu tg 
+		left join tbl_question tq on tg.gosu_number = tq.gosu_number
+		left join tbl_question_file tqf 
+		on tq.question_number =tqf.question_number 
+		where tg.gosu_number = #{gosuNumber}
+		and tq.question_status=#{questionStatus}
+		order by tq.last_update
+	</select>
 </mapper>
+

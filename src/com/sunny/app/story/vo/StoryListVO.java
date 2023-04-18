@@ -162,4 +162,6 @@ public class StoryListVO {
 				+ ", userNumber=" + userNumber + ", userNickname=" + userNickname + ", userProfileImage="
 				+ userProfileImage + ", fileSystemName=" + fileSystemName + ", storyFiles=" + storyFiles + "]";
 	}
+
+
 }

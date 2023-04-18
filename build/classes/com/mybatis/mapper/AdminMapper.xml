@@ -3,13 +3,360 @@
 
 
 <mapper namespace="admin">
+	<!-- 로그인 처리 -->
+	<select id="select" resultType="AdminDTO"
+		parameterType="AdminDTO">
+		select admin_number , admin_id, admin_password,
+		admin_name, admin_team from
+		tbl_admin
+		where admin_id = #{adminId} and
+		admin_password = #{adminPassword}
+	</select>
 
- 	<select id="select" resultType="AdminDTO" parameterType="AdminDTO">
- 		select admin_number , admin_id, admin_password, admin_name, admin_team from tbl_admin 
-		where admin_id = #{adminId} and admin_password = #{adminPassword}
- 	</select>
+	<select id="getTotal" resultType="_int">
+		select count(user_number) from
+		tbl_user
+	</select>
+	
+	<!-- userManage page -->
+	<select id="userInfo" resultType="UserManageVO"
+		parameterType="map">
+		select u.user_number , g.grade_name , u.user_nickname , u.user_date
+		from tbl_grade g join tbl_user u
+		on g.grade_number = u.grade_number
+		where 1 = 1
+		<if test="searchWord != null">
+			AND u.user_nickname like concat('%',#{searchWord},'%')
+		</if>
+		order by u.user_number desc
+	</select>
+	
+	<!-- userDetail page -->
+	<select id="userDetail" resultType="UserDetailVO"
+		parameterType="_int">
+		SELECT
+		u.user_number, g.grade_name, u.user_nickname,
+		u.user_name,
+		u.user_email, u.user_date, u.user_phone,
+		COUNT(DISTINCT
+		s.story_number) AS story_count,
+		COUNT(DISTINCT r.reply_number) AS
+		reply_count,
+		COUNT(DISTINCT f1.follow_number) AS follower_count,
+		COUNT(DISTINCT f2.follow_number) AS following_count
+		FROM tbl_user u
+		LEFT JOIN tbl_grade g ON u.grade_number = g.grade_number
+		LEFT JOIN
+		tbl_story s ON u.user_number = s.user_number
+		LEFT JOIN tbl_story_reply
+		r ON u.user_number = r.user_number
+		LEFT JOIN tbl_follow f1 ON
+		u.user_number = f1.user_to
+		LEFT JOIN tbl_follow f2 ON u.user_number =
+		f2.user_from
+		WHERE u.user_number
+		= #{userNumber}
+		GROUP BY u.user_number
+	</select>
 
+	<!-- gosuManage page -->
+	<select id="gosuInfo" resultType="GosuManageVO"
+		parameterType="map">
+		select
+		u.user_number,
+		g.gosu_number,
+		u.user_nickname,
+		count(distinct
+		q.question_number) as question_count,
+		count(distinct qr.reply_number)
+		as answer_count,
+		group_concat(distinct f.field_name
+		separator ', ') as
+		field_names
+		from tbl_gosu g
+		join tbl_gosu_field gf on
+		g.gosu_number =
+		gf.gosu_number
+		join tbl_field f on gf.field_number =
+		f.field_number
+		join
+		tbl_user u on g.user_number = u.user_number
+		left
+		outer join tbl_question
+		q on g.gosu_number = q.gosu_number
+		left outer
+		join tbl_question_reply qr
+		on g.gosu_number = qr.gosu_number
+		where
+		grade_number = 500
+		<if test="searchWord != null">
+			AND u.user_nickname like concat('%',#{searchWord},'%')
+		</if>
+		group by g.gosu_number
+	</select>
 
+	<!-- gosuDetail page -->
+	<select id="gosuDetail" resultType="GosuDetailVO" parameterType="_int">
+		WITH gosu_stats AS (
+		SELECT
+		u.user_number,
+		g.gosu_number,
+		u.user_nickname,
+		COUNT(DISTINCT q.question_number) AS question_count,
+		COUNT(DISTINCT qr.reply_number) AS answer_count,
+		GROUP_CONCAT(DISTINCT
+		f.field_name SEPARATOR ', ') AS gosu_fields
+		FROM tbl_gosu g
+		JOIN
+		tbl_gosu_field gf ON g.gosu_number = gf.gosu_number
+		JOIN tbl_field f ON
+		gf.field_number = f.field_number
+		JOIN tbl_user u ON g.user_number =
+		u.user_number
+		LEFT OUTER JOIN tbl_question q ON g.gosu_number =
+		q.gosu_number
+		LEFT OUTER JOIN tbl_question_reply qr ON g.gosu_number =
+		qr.gosu_number
+		WHERE u.grade_number = 500
+		GROUP BY g.gosu_number),
+		user_stats AS (
+		SELECT
+		u.user_number,
+		g.grade_name,
+		u.user_nickname,
+		u.user_name,
+		u.user_email,
+		u.user_date,
+		u.user_phone,
+		COUNT(DISTINCT
+		s.story_number) AS story_count,
+		COUNT(DISTINCT r.reply_number) AS
+		reply_count,
+		COUNT(DISTINCT f1.follow_number) AS follower_count,
+		COUNT(DISTINCT f2.follow_number) AS following_count
+		FROM tbl_user u
+		LEFT JOIN tbl_grade g ON u.grade_number = g.grade_number
+		LEFT JOIN
+		tbl_story s ON u.user_number = s.user_number
+		LEFT JOIN tbl_story_reply
+		r ON u.user_number = r.user_number
+		LEFT JOIN tbl_follow f1 ON
+		u.user_number = f1.user_to
+		LEFT JOIN tbl_follow f2 ON u.user_number =
+		f2.user_from
+		GROUP BY u.user_number
+		)
+		SELECT user_stats.user_number,
+		user_stats.grade_name,
+		user_stats.user_nickname,
+		user_stats.user_name,
+		user_stats.user_phone,
+		user_stats.user_email,
+		user_stats.user_date,
+		user_stats.story_count,
+		user_stats.reply_count,
+		user_stats.follower_count,
+		user_stats.following_count,
+		gosu_stats.gosu_number,
+		gosu_stats.gosu_fields,
+		gosu_stats.question_count,
+		gosu_stats.answer_count
+		FROM gosu_stats
+		JOIN
+		user_stats ON gosu_stats.user_number = user_stats.user_number AND
+		gosu_stats.user_nickname = user_stats.user_nickname
+		where
+		user_stats.user_number = #{userNumber}
+	</select>
+		
+	<select id="getTotal" resultType="_int">
+		select count(user_number) from tbl_user
+	</select>
+	
+	<select id="userInfo" resultType="UserManageVO" parameterType="map">
+		select u.user_number , g.grade_name , u.user_nickname , u.user_date  
+		from tbl_grade g join tbl_user u 
+		on g.grade_number = u.grade_number 
+		order by u.user_number desc
+	</select>
 
+	<select id="userDetail" resultType="UserDetailVO" parameterType="map">
+		SELECT 
+ 		 u.user_number, g.grade_name, u.user_nickname, u.user_name,
+ 		 u.user_email, u.user_date, u.user_phone,
+ 		 COUNT(DISTINCT s.story_number) AS story_count,
+ 		 COUNT(DISTINCT r.reply_number) AS reply_count,
+ 		 COUNT(DISTINCT f1.follow_number) AS follower_count,
+ 		 COUNT(DISTINCT f2.follow_number) AS following_count
+		FROM tbl_user u 
+ 		 LEFT JOIN tbl_grade g ON u.grade_number = g.grade_number
+		 LEFT JOIN tbl_story s ON u.user_number = s.user_number
+ 		 LEFT JOIN tbl_story_reply r ON u.user_number = r.user_number
+ 		 LEFT JOIN tbl_follow f1 ON u.user_number = f1.user_to
+  		LEFT JOIN tbl_follow f2 ON u.user_number = f2.user_from
+		WHERE u.user_number = 1
+		GROUP BY u.user_number
+	</select>
+	
+	<select id="gosuInfo" resultType="GosuManageVO" parameterType="map">
+		select 
+ 		u.user_number, g.gosu_number, u.user_nickname,
+ 		count(distinct q.question_number) as question_count, 
+ 		count(distinct qr.reply_number) as answer_count,
+ 		group_concat(distinct f.field_name separator ', ') as field_names
+		from tbl_gosu g
+		join tbl_question q on g.gosu_number = q.gosu_number
+		join tbl_question_reply qr on g.gosu_number = qr.gosu_number
+		join tbl_gosu_field gf on g.gosu_number = gf.gosu_number
+		join tbl_field f on gf.field_number = f.field_number
+		join tbl_user u on g.user_number = u.user_number
+		group by g.gosu_number;
+	</select>
+	
+	<select id="gosuDetail" resultType="GosuDetailVO" parameterType="map">
+		select
+		u.user_number, g.grade_name, u.user_nickname, u.user_name,
+		u.user_email, u.user_date, u.user_phone,
+		count(distinct s.story_number) as story_count,
+		count(distinct r.reply_number) as reply_count,
+		count(distinct f1.follow_number) as follower_count,
+		count(distinct f2.follow_number) as following_count,
+		gfn.gosu_number, gfn.gosu_fields,
+		q.question_count, qr.answer_count
+		from tbl_user u
+		join tbl_grade g on u.grade_number = g.grade_number
+		join tbl_story s on u.user_number = s.user_number
+		join tbl_story_reply r on u.user_number = r.user_number
+		join tbl_follow f1 on u.user_number = f1.user_to
+		join tbl_follow f2 on u.user_number = f2.user_from
+		join (
+			select g.gosu_number, count(distinct q.question_number) as question_count
+			from tbl_gosu g
+			join tbl_question q on g.gosu_number = q.gosu_number
+			group by g.gosu_number
+		) as q on u.user_number = q.gosu_number
+		join (
+			select g.gosu_number, count(distinct qr.reply_number) as answer_count
+			from tbl_gosu g
+			join tbl_question_reply qr on g.gosu_number = qr.gosu_number
+			group by g.gosu_number
+		) as qr on u.user_number = qr.gosu_number
+		join (
+			select g.gosu_number, group_concat(f.field_name separator ', ') gosu_fields from tbl_field f
+			join tbl_gosu_field gf on f.field_number = gf.field_number
+			join tbl_gosu g on gf.gosu_number = g.gosu_number
+			join tbl_user u on g.user_number = u.user_number
+			group by g.gosu_number
+		) as gfn on u.user_number = gfn.gosu_number
+		where u.user_number = 1
+		group by u.user_number, g.grade_name, u.user_nickname, u.user_name,
+		u.user_email, u.user_date, q.question_count, qr.answer_count
+	</select>
+
+	<!-- 회원 제명 쿼리 식집사,식고수 둘 다 사용 -->
+	<delete id="kill" parameterType="_int">
+		delete from tbl_user where
+		user_number = #{userNumber}
+	</delete>
+
+	<!-- 식고수 회원 식집사로 강등 쿼리 -->
+	<update id="down" parameterType="_int">
+		update tbl_user set grade_number
+		= 100 where user_number = #{userNumber}
+	</update>
+
+	<!-- applicationBoardList page -->
+	<select id="applicationList" resultType="GosuApplicationVO"
+		parameterType="map">
+		select apply_number, apply_date, tga.user_number,
+		apply_title, tu.user_nickname
+		from tbl_gosu_apply tga
+		join tbl_user tu
+		on tga.user_number =
+		tu.user_number
+		where tu.grade_number = 200
+	</select>
+
+	<!-- applicationBoardRead page -->
+	<select id="applicationRead" resultType="GosuApplicationReadVo"
+		parameterType="_int">
+		with field_stats as(
+		select u.user_number ,
+		g.gosu_number,
+		u.user_nickname ,
+		group_concat(f.field_name separator ', ') as
+		gosu_field_names
+		from tbl_field f
+		join tbl_gosu_field gf on
+		f.field_number = gf.field_number
+		join tbl_gosu g on gf.gosu_number =
+		g.gosu_number
+		join tbl_user u on g.user_number = u.user_number
+		join
+		tbl_gosu_apply tga on u.user_number = tga.user_number
+		group by
+		g.gosu_number
+		),
+		apply_stats as(
+		select tga.apply_number ,
+		tga.apply_content ,
+		tga.apply_date ,
+		tga.user_number ,
+		tga.apply_title
+		from tbl_gosu_apply tga
+		join tbl_user tu on tga.user_number =
+		tu.user_number
+		)
+		select
+		apply_stats.user_number,
+		field_stats.user_nickname,
+		field_stats.gosu_number,
+		apply_stats.apply_number,
+		apply_stats.apply_title,
+		apply_stats.apply_date,
+		apply_stats.apply_content,
+		field_stats.gosu_field_names
+		from field_stats
+		join apply_stats on
+		field_stats.user_number = apply_stats.user_number
+		where
+		apply_stats.apply_number = #{applyNumber}
+	</select>
+
+	<!-- 식고수 신청 승인 쿼리 -->
+	<update id="up" parameterType="_int">
+		update tbl_user set grade_number =
+		500
+		where user_number = #{userNumber}
+	</update>
+
+	<!-- 식고수 신청 거절 쿼리 -->
+	<update id="negative" parameterType="_int">
+		update tbl_user set
+		grade_number = 100
+		where user_number = #{userNumber}
+	</update>
+	
+	<delete id="deleteGosuNumber" parameterType="_int">
+		delete from tbl_gosu where user_number = #{userNumber};
+	</delete>
+	
+	<delete id="deleteGosuApply" parameterType="_int">
+		delete from tbl_gosu_apply where apply_number = #{applyNumber};
+	</delete>
+	
+	<delete id="delete"></delete>
+	
+	
+
+	<!-- header2 info  -->
+	<select id="headerInfo" resultType="HeaderInfoVO">
+		select
+		(select count(user_number) from tbl_user) as user_count,
+		(select count(user_number) from tbl_user where grade_number = 500) as gosu_count,
+		(select count(story_number) from tbl_story) as story_count,
+		(select count(question_number) from tbl_question) as question_count,
+		(select count(reply_number) from tbl_question_reply) as question_reply_count
+	</select>
 
 </mapper>

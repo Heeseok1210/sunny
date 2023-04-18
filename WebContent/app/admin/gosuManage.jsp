@@ -102,15 +102,6 @@
 								</tr>
 							</c:otherwise>
 						</c:choose>
-						
-<!-- 						<tr>
-							<td class="gosu-num">1</td>
-							<td><a href="">계란</a></td>
-							<td>토마토</td>
-							<td class="gosu-question-count">123</td>
-							<td class="gosu-answer-count">111</td>
-						</tr> -->
-						
 					</tbody>
 				</table>
 				<div class="search" id="search">

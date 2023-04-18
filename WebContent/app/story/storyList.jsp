@@ -37,7 +37,6 @@
 		</article>
 		<h3 class="subtit">볕 들 스토리들</h3>
 
-
 		<article class="holder2">
 			<div class="storyList sl">
     <ul class="listUl">

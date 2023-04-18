@@ -12,7 +12,7 @@
       integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="../../assets/css/algorithm/testThree.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/testThree.css" />
 </head>
 <body>
 	    <section id="qna" class="mx-auto my-5 py-5 px-3">
@@ -21,29 +21,15 @@
       <img src="../../assets/img/algorithm/index/home.png" 
         class = "img"></a>
       <div class="questionContainer">
-        <a href="http://127.0.0.1:5500/html/FindMyPlant/test2/test2.html">
-        <input
-          class ="back"
-          type="image"
-          src="../../assets/img/algorithm/testTwo/back.png"
-          value="뒤로가기"
-        />
-        </a>
         <h1>3. 식물의 관리를 위해 매일 시간을 내실 수 있나요?  </h1>
       </div>
       <div class="answerContainer">
-        <a href="http://127.0.0.1:5500/html/FindMyPlant/test4/test4.html">
-        <ul>
-          <li style="list-style-type: none">
-            <button class="btn true">YES</button>
-          </li>
-          <li style="list-style-type: none">
-            <button class="btn no">NO</button>
-            </li>
-         </ul>
-       </a>
-      </div>
+        <form action="${pageContext.request.contextPath}/algorithm/testFour.ag" method="get">
+		<input type="hidden"  name="selectThree" value="0">
+		<input type="button"class="btn true"  value="네" onclick="document.getElementsByName('selectThree')[0].value='1';this.form.submit();">
+		<input type="button" class="btn no"value="아니오" onclick="document.getElementsByName('selectThree')[0].value='0';this.form.submit();">
+		</form>
+		</div>
     </section>
-    <script src ="../../assets/js/algorithm/test1.js"></script>
 </body>
 </html>

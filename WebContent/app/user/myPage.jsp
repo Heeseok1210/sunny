@@ -38,7 +38,6 @@
 					<!-- 모달창 필요함-->
 					<button class="grade-info">등급보기 ></button>
 				</div>
-
 				<div class="main1--profile">
 					<div class="profile-left">
 						<!-- 사진 등록 전에는 기본아이콘 들어가있게 -->

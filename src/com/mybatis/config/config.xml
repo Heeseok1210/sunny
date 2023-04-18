@@ -50,7 +50,6 @@
 		<typeAlias type="com.sunny.app.admin.vo.HeaderInfoVO" alias ="HeaderInfoVO"/>
 		<typeAlias type="com.sunny.app.gosu.vo.GosuVO" alias ="GosuVO"/>
 		<typeAlias type="com.sunny.app.question.vo.QuestionVO" alias ="QuestionVO"/>
-		<typeAlias type="com.sunny.app.gosu.vo.GosuVO" alias ="GosuVO"/>
 
 
 	</typeAliases>

@@ -3,6 +3,32 @@
 
 
 <mapper namespace="userFile">
+	<insert id="insert" parameterType="UserFileDTO">
+		insert into tbl_user_file(file_system_name, file_original_name, user_number)
+		values (#{fileSystemName}, #{fileOriginalName}, #{userNumber})
+	</insert>
 
+	<select id="select" parameterType="_int" resultType="_int">
+		select count(file_system_name) 
+		from tbl_user_file 
+		where user_number = #{userNumber}
+	</select>
+	
+	<!-- 프로필사진, 닉네임 같이 가져오기 -->
+	<select id="selectFile" parameterType="_int" resultType="UserFileVO">
+		select tu.user_number , file_system_name , file_original_name , tu.user_nickname 
+		from tbl_user_file tuf join tbl_user tu 
+		on tuf.user_number =#{userNumber} and tuf.user_number =tu.user_number 
+	</select>
+	
+	
+	<update id="update" parameterType="UserFileDTO">
+		update tbl_user_file set file_system_name = #{fileSystemName}, file_original_name = #{fileOriginalName}
+		where user_number = #{userNumber}
+	</update>
+	
+	<delete id="delete" parameterType="_int">
+		delete from tbl_user_file where user_number = #{userNumber}
+	</delete>
 
 </mapper>

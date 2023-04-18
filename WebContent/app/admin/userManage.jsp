@@ -101,51 +101,9 @@
 								</tr>
 							</c:otherwise>
 						</c:choose>
-
-						<!-- 예시 -->
-					<!-- <tr>
-						<td class="user-num">1</td>
-						<td class="user-grade">식집사</td>
-						<td><a href="">소금</a></td>
-						<td class="join-date">2011.11.11</td>
-					</tr> -->
-					
 					</tbody>
 				</table>
-				<%-- <div class="pagination">
-					<ul>
-						<!-- ========== 페이징 처리 예시 ============ -->
-						<c:if test="${prev}">
-							<li><a
-								href="${pageContext.request.contextPath}/admin/userManageOk.bo?page=${startPage - 1}"
-								class="prev">&lt;</a></li>
-						</c:if>
 
-						<c:forEach var="i" begin="${startPage}" end="${endPage}">
-							<c:choose>
-								<c:when test="${!(i == page) }">
-									<li><a
-										href="${pageContext.request.contextPath}/board/boardListOk.bo?page=${i}">
-											<c:out value="${i}" />
-									</a></li>
-								</c:when>
-								<c:otherwise>
-									<li><a href="#" class="active"> <c:out value="${i}" />
-									</a></li>
-								</c:otherwise>
-							</c:choose>
-						</c:forEach>
-
-						<c:if test="${next}">
-							<li><a
-								href="${pageContext.request.contextPath}/board/boardListOk.bo?page=${endPage + 1}"
-								class="next">&gt;</a></li>
-						</c:if>
-
-
-						<!-- ========== /페이징 처리 예시 ============ -->
-					</ul>
-				</div> --%>
 				<div class="search" id="search">
 					<input type="text" class="input" placeholder="Search name..." value="" id="searchPram" onkeyup="if(window.event.keyCode==13){searchAction()}"/>
 					<button class="btn">

@@ -2,6 +2,33 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="storyFile">
+	<insert id="insert" parameterType="StoryFileDTO">
+		insert into tbl_story_file
+		(file_system_name1, file_original_name1, story_number, file_system_name2,
+		file_system_name3, file_original_name2, file_original_name3)
+		values(#{fileSystemName1},#{fileOriginalName1},#{storyNumber},#{fileSystemName2},#{fileSystemName3},#{fileOriginalName2},#{fileOriginalName3})
+	</insert>
 
+	<select id="select" parameterType="_int" resultType="StoryFileDTO">
+		select s.story_number, s.story_title, s.story_content, s.story_content2, s.story_content3,s.story_viewcnt,
+		s.story_date, last_update, file_system_name1, file_original_name1,  file_system_name2, file_system_name3, file_original_name2, file_original_name3,
+		u.user_nickname, uf.file_system_name as user_profile_image
+		from tbl_story_file tsf 
+		inner join tbl_story s on s.story_number = tsf.story_number 
+		inner join tbl_user u on s.user_number = u.user_number
+		left outer join tbl_user_file uf on u.user_number = uf.user_number
+		where s.story_number = #{storyNumber}
+	</select>
+
+	<delete id="delete" parameterType="_int">
+		delete from tbl_story_file
+		where story_number = #{storyNumber}
+	</delete>
+	
+	<update id="update" parameterType="StoryFileDTO">
+		update tbl_story_file
+		set file_system_name1=#{fileSystemName1}, file_original_name1=#{fileOriginalName1}, file_system_name2=#{fileSystemName2}, file_system_name3=#{fileSystemName3}, file_original_name2=#{fileOriginalName2}, file_original_name3=#{fileOriginalName3}
+		where file_system_name1=#{fileSystemName1} and story_number=#{storyNumber}
+	</update>
 
 </mapper>

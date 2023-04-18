@@ -2,4 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="gosuField">
+	<insert id="insert" parameterType="gosuFieldDTO">
+		insert into tbl_gosu_field(field_number, gosu_number)
+		values(#{fieldNumber}, #{gosuNumber});
+	</insert>
 </mapper>

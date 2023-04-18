@@ -6,7 +6,6 @@ import org.apache.ibatis.session.SqlSession;
 
 import com.mybatis.config.MyBatisConfig;
 import com.sunny.app.gosu.vo.GosuVO;
-import com.sunny.app.story.file.vo.StoryFileVO;
 import com.sunny.app.story.vo.StoryListVO;
 
 public class MainDAO {
