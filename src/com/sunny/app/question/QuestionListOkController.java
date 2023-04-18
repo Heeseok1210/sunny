@@ -21,7 +21,7 @@ public class QuestionListOkController implements Execute {
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		System.out.println("들어완");
+		System.out.println("- list입니다 - ");
 
 		QuestionDAO questionDAO = new QuestionDAO();
 		GosuDAO gosuDAO = new GosuDAO();

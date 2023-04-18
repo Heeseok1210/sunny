@@ -37,7 +37,7 @@
             <!-- 메뉴바 경로처리 -->
             <li class="header2-menu-list"><a href="${pageContext.request.contextPath}/app/main/main.jsp" class="header-active">홈</a></li>
             <li class="header2-menu-list"><a href="${pageContext.request.contextPath}/app/story/storyList.jsp"> 스토리</a></li>
-            <li class="header2-menu-list"><a href="${pageContext.request.contextPath}/app/question/questionList.jsp"> 식고수에게 물어보기</a></li>
+            <li class="header2-menu-list"><a href="${pageContext.request.contextPath}/gosu/searchOk.gu"> 식고수에게 물어보기</a></li>
             <li class="header2-menu-list"><a href="${pageContext.request.contextPath}/app/algorithm/index.jsp"> 반려식물 찾기</a></li>
             <li class="header2-menu-list"><a href="${pageContext.request.contextPath}/user/myPage.us"> 마이페이지</a></li>
           </ul>

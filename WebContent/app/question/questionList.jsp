@@ -17,7 +17,7 @@
 	<jsp:include
 		page="${pageContext.request.contextPath}/app/header/header.jsp" />
 	<div class="pcontainer">
-<!-- 모달창 -->
+		<!-- 모달창 -->
 		<div id="myModal" class="modal">
 			<div class="modal-content">
 				<span class="close">&times;</span>
@@ -27,18 +27,14 @@
 				</p>
 			</div>
 		</div>
-<!-- 맨위 -->
+		<!-- 맨위 -->
 		<div class="plus-top">
 			<p>
-				<strong> 
-					<c:out value="${gosuNickName}"></c:out>
-				</strong> 님의 페이지에 오신 것을 환영합니다. 
-				<a
-					href="${pageContext.request.contextPath}/question/questionWrite.qs?gosuNumber=1"
-					class="plus-btn" onclick="questionList()">질문하기</a>
+				<strong> <c:out value="${gosuNickName}"></c:out>
+				</strong> 님의 페이지에 오신 것을 환영합니다.
 			</p>
 		</div>
-<!-- 글작성팁 -->
+		<!-- 글작성팁 -->
 		<div class="info">
 			<div class="infozone" onclick="showModal()">
 				<h3>
@@ -49,11 +45,15 @@
 					alt="">
 			</div>
 		</div>
-
+		<div class="pbtn">
+			<a
+				href="${pageContext.request.contextPath}/question/questionWrite.qs?gosuNumber=${question.getGosuNumber()}"
+				class="plus-btn" onclick="questionList()">질문하기</a>
+		</div>
 		<div class="question">
 			<h3 class="qq">질문</h3>
 			<div class="q1">
-<!-- 미답변 -->
+				<!-- 미답변 -->
 				<div class="noanswer">
 					<button type="button">미답변</button>
 					<table class="noreply-table">
@@ -63,10 +63,10 @@
 									<c:forEach var="question" items="${questionList}">
 										<c:if test="${question.getQuestionStatus() == '0'}">
 											<tr class="imti">
-												<td class="imgz">
-													<a href=""> <%-- <img alt="" src="">--%></a>
-												</td>
-												<td class="title">${question.getQuestionTitle()}</td>
+												<td class="imgz"></td>
+												<td class="title"><a
+													href="${pageContext.request.contextPath}/question/questionReadOk.qs?questionNumber=${question.getQuestionNumber()}">
+														${question.getQuestionTitle()} </a></td>
 											</tr>
 										</c:if>
 									</c:forEach>
@@ -82,7 +82,7 @@
 				</div>
 			</div>
 		</div>
-<!-- 답변완료 -->
+		<!-- 답변완료 -->
 		<div class="answercom">
 			<button type="button">답변완료</button>
 			<table class="noreply-table">
